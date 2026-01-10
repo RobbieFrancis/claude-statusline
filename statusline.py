@@ -214,68 +214,78 @@ def format_tokens(tokens):
 
 
 def get_message_count(transcript_path):
-    """Count the number of messages in the transcript file."""
+    """Count the number of messages in the transcript file (JSONL format)."""
     try:
         if not transcript_path or not Path(transcript_path).exists():
             return 0
 
+        count = 0
         with open(transcript_path, 'r') as f:
-            transcript = json.load(f)
-            messages = transcript.get("messages", [])
-            return len(messages)
-    except (json.JSONDecodeError, IOError, FileNotFoundError):
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    entry = json.loads(line)
+                    # Count user and assistant messages
+                    if entry.get("type") in ("user", "assistant"):
+                        count += 1
+                except json.JSONDecodeError:
+                    continue
+        return count
+    except (IOError, FileNotFoundError):
         return 0
 
 
 def get_session_duration(transcript_path):
-    """Calculate session duration from transcript timestamps."""
+    """Calculate session duration from transcript timestamps (JSONL format)."""
     try:
         if not transcript_path or not Path(transcript_path).exists():
             return None
 
+        first_timestamp = None
         with open(transcript_path, 'r') as f:
-            transcript = json.load(f)
-            messages = transcript.get("messages", [])
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    entry = json.loads(line)
+                    if "timestamp" in entry:
+                        first_timestamp = entry["timestamp"]
+                        break
+                except json.JSONDecodeError:
+                    continue
 
-            if not messages:
-                return None
+        if not first_timestamp:
+            return None
 
-            # Find the first message timestamp
-            first_timestamp = None
-            for message in messages:
-                if "timestamp" in message:
-                    first_timestamp = message["timestamp"]
-                    break
+        # Calculate duration from first message to now
+        from datetime import datetime
 
-            if not first_timestamp:
-                return None
+        # Parse ISO timestamp
+        first_time = datetime.fromisoformat(first_timestamp.replace('Z', '+00:00'))
+        current_time = datetime.now(first_time.tzinfo)
 
-            # Calculate duration from first message to now
-            from datetime import datetime
+        duration_seconds = int((current_time - first_time).total_seconds())
 
-            # Parse ISO timestamp
-            first_time = datetime.fromisoformat(first_timestamp.replace('Z', '+00:00'))
-            current_time = datetime.now(first_time.tzinfo)
+        # Format duration
+        if duration_seconds < 60:
+            return f"{duration_seconds}s"
 
-            duration_seconds = int((current_time - first_time).total_seconds())
+        minutes = duration_seconds // 60
+        if minutes < 60:
+            return f"{minutes}m"
 
-            # Format duration
-            if duration_seconds < 60:
-                return f"{duration_seconds}s"
+        hours = minutes // 60
+        remaining_minutes = minutes % 60
 
-            minutes = duration_seconds // 60
-            if minutes < 60:
-                return f"{minutes}m"
+        if remaining_minutes > 0:
+            return f"{hours}h {remaining_minutes}m"
+        else:
+            return f"{hours}h"
 
-            hours = minutes // 60
-            remaining_minutes = minutes % 60
-
-            if remaining_minutes > 0:
-                return f"{hours}h {remaining_minutes}m"
-            else:
-                return f"{hours}h"
-
-    except (json.JSONDecodeError, IOError, FileNotFoundError, ValueError):
+    except (IOError, FileNotFoundError, ValueError):
         return None
 
 
