@@ -66,9 +66,13 @@ if [ ! -f "$CONFIG_FILE" ]; then
   "show_title": true,
   "show_usage_limits": false,
   "show_git_branch": true,
+  "show_git_status": true,
+  "show_git_ahead_behind": true,
   "show_context_bar": true,
   "show_model": true,
-  "show_project": true
+  "show_project": true,
+  "show_message_count": true,
+  "show_session_duration": true
 }
 EOF
     echo -e "${GREEN}Created:${NC} $CONFIG_FILE"
