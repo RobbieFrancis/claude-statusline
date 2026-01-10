@@ -35,36 +35,42 @@ Then restart Claude Code.
 
 ## Interactive Configurator
 
-The statusline includes a TUI (Terminal User Interface) configurator for easy customization with live preview.
+The statusline includes an interactive configurator that runs directly inside Claude Code with a visual UI.
 
 ### Launch the Configurator
 
-**Via Claude Code slash command:**
+Just say to Claude:
 ```
-/statusline-config
-```
-Then run the command shown.
-
-**Or directly from terminal:**
-```bash
-python3 ~/.claude/statusline-configurator.py
+run statusline config
 ```
 
 ### Configurator Features
 
-- **Toggle switches** for each display option
-- **Text input** for custom title
+- **Visual config display** with box-drawing characters
+- **Toggle options** via Claude's native question UI
+- **Change title** with simple text input
 - **Live preview** showing exactly how your statusline will look
-- **Keyboard shortcuts**: `s` to save, `Esc` to cancel
+- **Instant apply** - changes take effect immediately, no restart needed
 
-### Configurator Requirements
+### Example
 
-The configurator requires the `textual` library:
-```bash
-pip3 install textual
+```
+╔══════════════════════════════════════════════════════════════╗
+║  Statusline Configuration                                    ║
+╠══════════════════════════════════════════════════════════════╣
+║  Title: "Statusline_Pro"                                     ║
+╠══════════════════════════════════════════════════════════════╣
+║  ✓ Show Title          ✓ Show Model          ✓ Show Project  ║
+║  ✓ Git Branch          ✓ Git Status          ✓ Ahead/Behind  ║
+║  ✓ Context Bar         ✗ Usage Limits        ✓ Duration      ║
+║  ✓ Message Count                                             ║
+╠══════════════════════════════════════════════════════════════╣
+║  Preview:                                                    ║
+║  Statusline_Pro | Opus 4.5 | project | main *3 | 15% [███░░] ║
+╚══════════════════════════════════════════════════════════════╝
 ```
 
-**Note:** Changes are applied immediately - no need to restart Claude Code!
+**Note:** An external TUI configurator (`statusline-configurator.py`) is also available for use outside Claude Code.
 
 ## Manual Installation
 
