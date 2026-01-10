@@ -1,4 +1,6 @@
 {
+  "title": "Statusline_Pro",
+  "show_title": true,
   "show_usage_limits": false,
   "show_git_branch": true,
   "show_context_bar": true,

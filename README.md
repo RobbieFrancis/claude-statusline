@@ -7,11 +7,12 @@ A cross-platform statusline for [Claude Code](https://claude.ai/code) that displ
 ## Preview
 
 ```
-Opus 4.5 | my-project | main | 14% [███░░░░░░░░░░░░░░░░░] 28K/200K tokens | 5h: 47.0% / 7d: 17.0%
+Statusline_Pro | Opus 4.5 | my-project | main | 14% [███░░░░░░░░░░░░░░░░░] 28K/200K tokens | 5h: 47.0% / 7d: 17.0%
 ```
 
 ## Features
 
+- **Custom title** - Configurable title (default: "Statusline_Pro")
 - **Model name** - Shows which Claude model is active (e.g., Opus 4.5, Sonnet 4)
 - **Project name** - Current working directory/project
 - **Git branch** - Current branch when in a git repository
@@ -57,6 +58,8 @@ Create `~/.claude/statusline-config.json` to customize the statusline:
 
 ```json
 {
+  "title": "Statusline_Pro",
+  "show_title": true,
   "show_usage_limits": false,
   "show_git_branch": true,
   "show_context_bar": true,
@@ -67,6 +70,8 @@ Create `~/.claude/statusline-config.json` to customize the statusline:
 
 | Option | Default | Description |
 |--------|---------|-------------|
+| `title` | `"Statusline_Pro"` | Custom title text displayed at the start |
+| `show_title` | `true` | Show the custom title |
 | `show_usage_limits` | `false` | Display API usage (5h/7d percentages). Requires OAuth. |
 | `show_git_branch` | `true` | Show current git branch |
 | `show_context_bar` | `true` | Show context window usage with progress bar |

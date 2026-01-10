@@ -19,6 +19,8 @@ def get_config():
     """Load configuration from ~/.claude/statusline-config.json"""
     config_path = Path.home() / ".claude" / "statusline-config.json"
     default_config = {
+        "title": "Statusline_Pro",
+        "show_title": True,
         "show_usage_limits": False,
         "show_git_branch": True,
         "show_context_bar": True,
@@ -135,6 +137,7 @@ def format_tokens(tokens):
 
 def main():
     # ANSI color codes
+    COLOR_TITLE = "\033[1;97m"    # Bold white
     COLOR_MODEL = "\033[36m"      # Cyan
     COLOR_PROJECT = "\033[33m"    # Yellow
     COLOR_BRANCH = "\033[32m"     # Green
@@ -160,6 +163,11 @@ def main():
 
     # Build output parts
     parts = []
+
+    # Title
+    if config.get("show_title"):
+        title = config.get("title", "Statusline_Pro")
+        parts.append(f"{COLOR_TITLE}{title}{COLOR_RESET}")
 
     # Model name
     if config.get("show_model") and model:

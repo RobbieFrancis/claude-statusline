@@ -62,6 +62,8 @@ if [ ! -f "$CONFIG_FILE" ]; then
     echo "Creating default configuration..."
     cat > "$CONFIG_FILE" << 'EOF'
 {
+  "title": "Statusline_Pro",
+  "show_title": true,
   "show_usage_limits": false,
   "show_git_branch": true,
   "show_context_bar": true,
