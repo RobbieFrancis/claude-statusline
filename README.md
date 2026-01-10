@@ -7,7 +7,7 @@ A cross-platform statusline for [Claude Code](https://claude.ai/code) that displ
 ## Preview
 
 ```
-Opus 4.5 | my-project | main | 14% [███░░░░░░░░░░░░░░░░░] 28K/200K tokens | 5h: 47.0% / 7d: 17.0%
+Opus 4.5 | my-project | main | 14% [███░░░░░░░░░░░░] 28K/200K tokens | 5h: 47.0% / 7d: 17.0%
 ```
 
 ## Features
