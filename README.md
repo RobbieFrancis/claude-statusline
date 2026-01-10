@@ -6,6 +6,8 @@ A cross-platform statusline for [Claude Code](https://claude.ai/code) that displ
 
 ## Preview
 
+![Claude Code Statusline](Status_Line.png)
+
 ```
 Statusline_Pro | Opus 4.5 | my-project | main *3 (+1,~2) ↑2 ↓1 | 14% [███░░░░░░░░░░░░░░░░░] 28K/200K tokens | 5h: 47% / 7d: 17% | 1h 23m | 42 msgs
 ```
