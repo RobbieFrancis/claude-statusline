@@ -56,6 +56,19 @@ curl -sSL "$REPO_URL/statusline.py" -o "$CLAUDE_DIR/statusline.py"
 chmod +x "$CLAUDE_DIR/statusline.py"
 echo -e "${GREEN}Downloaded:${NC} $CLAUDE_DIR/statusline.py"
 
+# Download statusline-configurator.py
+echo ""
+echo "Downloading statusline-configurator.py..."
+curl -sSL "$REPO_URL/statusline-configurator.py" -o "$CLAUDE_DIR/statusline-configurator.py"
+chmod +x "$CLAUDE_DIR/statusline-configurator.py"
+echo -e "${GREEN}Downloaded:${NC} $CLAUDE_DIR/statusline-configurator.py"
+
+# Create commands directory and slash command
+COMMANDS_DIR="$CLAUDE_DIR/commands"
+mkdir -p "$COMMANDS_DIR"
+curl -sSL "$REPO_URL/commands/statusline-config.md" -o "$COMMANDS_DIR/statusline-config.md"
+echo -e "${GREEN}Created:${NC} $COMMANDS_DIR/statusline-config.md"
+
 # Create default config if it doesn't exist
 CONFIG_FILE="$CLAUDE_DIR/statusline-config.json"
 if [ ! -f "$CONFIG_FILE" ]; then
@@ -130,7 +143,18 @@ echo "=========================================="
 echo ""
 echo "Restart Claude Code to see your new statusline."
 echo ""
-echo "To enable API usage limits display, edit:"
-echo "  $CONFIG_FILE"
-echo "and set \"show_usage_limits\": true"
+echo "To configure your statusline, use the TUI configurator:"
+echo "  python3 ~/.claude/statusline-configurator.py"
+echo ""
+echo "Or use the slash command in Claude Code:"
+echo "  /statusline-config"
+echo ""
+
+# Check for textual dependency
+if python3 -c "import textual" 2>/dev/null; then
+    echo -e "${GREEN}Configurator ready:${NC} textual library is installed"
+else
+    echo -e "${YELLOW}Note:${NC} The TUI configurator requires the textual library"
+    echo "      Install with: pip3 install textual"
+fi
 echo ""

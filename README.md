@@ -33,6 +33,39 @@ curl -sSL https://raw.githubusercontent.com/RobbieFrancis/claude-statusline/main
 
 Then restart Claude Code.
 
+## Interactive Configurator
+
+The statusline includes a TUI (Terminal User Interface) configurator for easy customization with live preview.
+
+### Launch the Configurator
+
+**Via Claude Code slash command:**
+```
+/statusline-config
+```
+Then run the command shown.
+
+**Or directly from terminal:**
+```bash
+python3 ~/.claude/statusline-configurator.py
+```
+
+### Configurator Features
+
+- **Toggle switches** for each display option
+- **Text input** for custom title
+- **Live preview** showing exactly how your statusline will look
+- **Keyboard shortcuts**: `s` to save, `Esc` to cancel
+
+### Configurator Requirements
+
+The configurator requires the `textual` library:
+```bash
+pip3 install textual
+```
+
+**Note:** Changes are applied immediately - no need to restart Claude Code!
+
 ## Manual Installation
 
 ### 1. Download the script
@@ -141,7 +174,9 @@ Use Windows Subsystem for Linux (WSL). Install Claude Code in WSL and run the in
 | File | Location | Purpose |
 |------|----------|---------|
 | `statusline.py` | `~/.claude/` | Main statusline script |
-| `statusline-config.json` | `~/.claude/` | Optional configuration |
+| `statusline-configurator.py` | `~/.claude/` | TUI configurator app |
+| `statusline-config.json` | `~/.claude/` | Configuration file |
+| `statusline-config.md` | `~/.claude/commands/` | Slash command definition |
 | `settings.json` | `~/.claude/` | Claude Code settings |
 
 ## Legacy Bash Version
