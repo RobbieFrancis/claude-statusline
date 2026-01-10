@@ -1,0 +1,7 @@
+{
+  "show_usage_limits": false,
+  "show_git_branch": true,
+  "show_context_bar": true,
+  "show_model": true,
+  "show_project": true
+}
