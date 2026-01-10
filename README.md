@@ -38,3 +38,10 @@ chmod +x ~/.claude/statusline-command.sh
 - macOS (uses Keychain for API token)
 - `jq` installed (`brew install jq`)
 - Claude Code CLI
+
+## Inspiration
+
+This statusline was inspired by:
+
+- [How to Show Claude Code Usage Limits in Your Statusline](https://codelynx.dev/posts/claude-code-usage-limits-statusline) by Melvynx - Great tutorial on displaying API usage limits in the statusline
+- [Claude Clone Autonomous Coding Demo](https://www.youtube.com/watch?v=YW09hhnVqNM) by Leon - Video demonstrating autonomous coding with Claude Agent SDK, which sparked the idea of monitoring context window usage
