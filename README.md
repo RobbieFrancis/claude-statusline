@@ -1,90 +1,31 @@
 # Claude Code Statusline
 
-A cross-platform statusline for [Claude Code](https://claude.ai/code) that displays useful context at a glance.
+A simple, cross-platform statusline for [Claude Code](https://claude.ai/code) that displays useful context at a glance.
 
 **Supports:** macOS, Linux, Windows (WSL)
 
-## Preview
-
-![Claude Code Statusline](Status_Line.png)
-
 ```
-Statusline_Pro | Opus 4.5 | my-project | main *3 (+1,~2) ↑2 ↓1 | 14% [███░░░░░░░░░░░░░░░░░] 28K/200K tokens | 5h: 47% / 7d: 17% | 1h 23m | 42 msgs
+Opus 4.5 | my-project | main *3 (+1,~2) ↑2 ↓1 | 14% [███░░░░░░░░░░░░░░░░░] 28K/200K tokens | 1h 23m | 42 msgs
 ```
 
 ## Features
 
-- **Custom title** - Configurable title (default: "Statusline_Pro")
-- **Model name** - Shows which Claude model is active (e.g., Opus 4.5, Sonnet 4)
-- **Project name** - Current working directory/project
-- **Git branch** - Current branch when in a git repository
-- **Git status** - Modified/staged/untracked file counts (e.g., `*3 (+1,~2)`)
-- **Ahead/behind** - Commits ahead/behind remote (e.g., `↑2 ↓1`)
+- **Model name** - Active Claude model
+- **Project name** - Current working directory
+- **Git branch + status** - Branch, modified/staged/untracked counts, ahead/behind remote
 - **Context window** - Visual progress bar showing token usage
-- **API usage limits** - 5-hour and 7-day utilization percentages (optional)
-- **Session duration** - How long the current session has been running
-- **Message count** - Number of messages in the current session
+- **API usage limits** - 5-hour and 7-day utilization (optional, requires OAuth)
+- **Session duration** and **message count**
 
-## Quick Install
+## Install
 
-```bash
-curl -sSL https://raw.githubusercontent.com/RobbieFrancis/claude-statusline/main/install.sh | bash
-```
-
-Then restart Claude Code.
-
-## Interactive Configurator
-
-The statusline includes an interactive configurator that runs directly inside Claude Code with a visual UI.
-
-### Launch the Configurator
-
-Just say to Claude:
-```
-run statusline config
-```
-
-### Configurator Features
-
-- **Visual config display** with box-drawing characters
-- **Toggle options** via Claude's native question UI
-- **Change title** with simple text input
-- **Live preview** showing exactly how your statusline will look
-- **Instant apply** - changes take effect immediately, no restart needed
-
-### Example
-
-```
-╔══════════════════════════════════════════════════════════════╗
-║  Statusline Configuration                                    ║
-╠══════════════════════════════════════════════════════════════╣
-║  Title: "Statusline_Pro"                                     ║
-╠══════════════════════════════════════════════════════════════╣
-║  ✓ Show Title          ✓ Show Model          ✓ Show Project  ║
-║  ✓ Git Branch          ✓ Git Status          ✓ Ahead/Behind  ║
-║  ✓ Context Bar         ✗ Usage Limits        ✓ Duration      ║
-║  ✓ Message Count                                             ║
-╠══════════════════════════════════════════════════════════════╣
-║  Preview:                                                    ║
-║  Statusline_Pro | Opus 4.5 | project | main *3 | 15% [███░░] ║
-╚══════════════════════════════════════════════════════════════╝
-```
-
-**Note:** An external TUI configurator (`statusline-configurator.py`) is also available for use outside Claude Code.
-
-## Manual Installation
-
-### 1. Download the script
+1. Copy the script:
 
 ```bash
-mkdir -p ~/.claude
 curl -o ~/.claude/statusline.py https://raw.githubusercontent.com/RobbieFrancis/claude-statusline/main/statusline.py
-chmod +x ~/.claude/statusline.py
 ```
 
-### 2. Configure Claude Code
-
-Add this to `~/.claude/settings.json`:
+2. Add to `~/.claude/settings.json`:
 
 ```json
 {
@@ -95,111 +36,33 @@ Add this to `~/.claude/settings.json`:
 }
 ```
 
-### 3. Restart Claude Code
+3. Restart Claude Code.
 
 ## Configuration
 
-Create `~/.claude/statusline-config.json` to customize the statusline:
+Optionally create `~/.claude/statusline-config.json` to toggle sections:
 
 ```json
 {
-  "title": "Statusline_Pro",
-  "show_title": true,
-  "show_usage_limits": false,
+  "show_title": false,
+  "show_model": true,
+  "show_project": true,
   "show_git_branch": true,
   "show_git_status": true,
   "show_git_ahead_behind": true,
   "show_context_bar": true,
-  "show_model": true,
-  "show_project": true,
-  "show_message_count": true,
-  "show_session_duration": true
+  "show_usage_limits": false,
+  "show_session_duration": true,
+  "show_message_count": true
 }
 ```
-
-| Option | Default | Description |
-|--------|---------|-------------|
-| `title` | `"Statusline_Pro"` | Custom title text displayed at the start |
-| `show_title` | `true` | Show the custom title |
-| `show_model` | `true` | Show the active Claude model |
-| `show_project` | `true` | Show the current project/directory name |
-| `show_git_branch` | `true` | Show current git branch |
-| `show_git_status` | `true` | Show modified/staged/untracked counts |
-| `show_git_ahead_behind` | `true` | Show commits ahead/behind remote |
-| `show_context_bar` | `true` | Show context window usage with progress bar |
-| `show_usage_limits` | `false` | Display API usage (5h/7d percentages). Requires OAuth. |
-| `show_session_duration` | `true` | Show how long the session has been running |
-| `show_message_count` | `true` | Show number of messages in the session |
-
-### Enabling Usage Limits
-
-To show API usage limits, set `"show_usage_limits": true` in your config.
-
-This feature reads your Claude Code OAuth credentials:
-- **macOS**: From Keychain
-- **Linux/WSL**: From `~/.claude/.credentials.json`
 
 ## Requirements
 
 - Python 3.6+
 - Claude Code CLI
-- No additional pip dependencies (uses Python stdlib only)
-
-## Platform Notes
-
-### macOS
-
-Works out of the box. Credentials are read from macOS Keychain.
-
-### Linux
-
-Works out of the box. Credentials are read from `~/.claude/.credentials.json`.
-
-### Windows
-
-Use Windows Subsystem for Linux (WSL). Install Claude Code in WSL and run the install script there.
-
-## Troubleshooting
-
-### Statusline not appearing
-
-1. Make sure `~/.claude/settings.json` has the correct `statusLine` configuration
-2. Check that Python 3 is installed: `python3 --version`
-3. Restart Claude Code
-
-### Usage limits not showing
-
-1. Set `"show_usage_limits": true` in `~/.claude/statusline-config.json`
-2. Make sure you're logged in to Claude Code (`claude login`)
-3. Check credentials exist:
-   - macOS: `security find-generic-password -s "Claude Code-credentials" -w`
-   - Linux: `cat ~/.claude/.credentials.json`
-
-## Files
-
-| File | Location | Purpose |
-|------|----------|---------|
-| `statusline.py` | `~/.claude/` | Main statusline script |
-| `statusline-configurator.py` | `~/.claude/` | TUI configurator app |
-| `statusline-config.json` | `~/.claude/` | Configuration file |
-| `statusline-config.md` | `~/.claude/commands/` | Slash command definition |
-| `settings.json` | `~/.claude/` | Claude Code settings |
-
-## Legacy Bash Version
-
-The original macOS-only bash script is available as `statusline-command.sh` for reference.
-
-## Inspiration
-
-This statusline was inspired by:
-
-- [How to Show Claude Code Usage Limits in Your Statusline](https://codelynx.dev/posts/claude-code-usage-limits-statusline) by Melvynx
-- [Claude Clone Autonomous Coding Demo](https://www.youtube.com/watch?v=YW09hhnVqNM) by Leon
+- No pip dependencies (stdlib only)
 
 ## License
 
-MIT License - Feel free to use, modify, and share!
-
-## Contributing
-
-Contributions welcome! Please open an issue or pull request.
+MIT
